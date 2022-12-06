@@ -1,8 +1,8 @@
-# Python SDK
+# Python API Wrapper Module
 
 ## Overview
-The SDK provides a developer with basic create/update/delete utilities for multiple areas of the Stream API. 
-Additionally, many input/output-specific modules have been incorporated into the SDK to help facilitate
+The API wrapper module provides a developer with basic create/update/delete utilities for multiple areas of the Stream API. 
+Additionally, many input/output-specific modules have been incorporated into this to help facilitate
 easier creation of these items in a Stream deployment, such as S3 and Splunk sources and destinations. 
 
 
@@ -38,7 +38,7 @@ The distribution can be visualized as follows:
 ```
 
 ### Build
-To build the SDK, execute the following command - srcdir will contain the `pyproject.toml` file, which contains configuration for the build process:
+To build the API wrapper module, execute the following command - srcdir will contain the `pyproject.toml` file, which contains configuration for the build process:
 
 `python3 -m build /path/to/srcdir`
 
@@ -56,7 +56,7 @@ The wheel file can be installed via the following command (change the path as ap
 `python3 -m pip install /path/to/dist/cribl-1.0-py3-none-any.whl --force-reinstall`
 
 ### Requests Library
-The requests library (https://requests.readthedocs.io/en/latest/) is utilized by the SDK for HTTP operations. 
+The requests library (https://requests.readthedocs.io/en/latest/) is utilized by the API wrapper module for HTTP operations. 
 
 ### Use in Python Scripts
 Before anything, the developer must retrieve an authorization token from the Cribl instance. The following values must be provided:
@@ -174,7 +174,7 @@ Handling routes through the API is a bit different than the other configuration 
 Creating a route is actually updating "default" route table by adding the route object to the list, so the HTTP method used is PATCH, and not POST. Similarly, deleting a route involves
 updating the "default" route table by removing the route object from the list.
 
-To make things easier, the SDK provides the following methods to deal with the route table:
+To make things easier, the API wrapper module provides the following methods to deal with the route table:
 
 - `get_routes(base_url, cribl_auth_token, worker_group)`
 
@@ -194,7 +194,7 @@ If no position is specified, the route is added to the beginning of the list.
 
 #### Specific input and output types
 
-Where applicable, the SDK offers helper functions to create/update/delete specific inputs and outputs. This is done for the developer in order to avoid constructing the entire 
+Where applicable, the API wrapper module offers helper functions to create/update/delete specific inputs and outputs. This is done for the developer in order to avoid constructing the entire 
 JSON payload when creating one of these components.
 
 An example of the create/update/delete cycle for an HTTP source input can be depicted as follows:
@@ -227,7 +227,7 @@ An example of the create/update/delete cycle for an HTTP source input can be dep
 ```
 
 #### Expert Mode
-Any area of the API may be called via the SDK using the generic methods in lib/http_operations.py:
+Any area of the API may be called via the API wrapper module using the generic methods in lib/http_operations.py:
 
 - `get(url, headers, payload)`
 
@@ -245,7 +245,7 @@ methods.
 
 #### Notes
 - Each function must have the base_url and cribl_auth token passed to it. In distributed deployments, the worker group name must be passed to most functions (besides system-wide items such as versioning, system, etc) as shown above.
-- Parameters in SDK functions, such as `enable_proxy_header` in the create function, follow snake case. 
+- Parameters in API wrapper module functions, such as `enable_proxy_header` in the create function, follow snake case. 
 - Update functions require a parameter called `update_data`. This is a JSON object that contains the required fields (in this case, host and port) as well as other fields that the developer wishes to change. 
 - Note that camel case is used for the field names in these updates in order to align with the API. See documentation at https://docs.cribl.io/api.
 - In this example, `enable_proxy_header` in the `create_http_source` function corresponds to the `enableProxyHeader` field in the update data. 
