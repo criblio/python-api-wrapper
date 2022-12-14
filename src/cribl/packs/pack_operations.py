@@ -1,11 +1,11 @@
-from ..lib.http_operations import *
+from cribl.lib.http_operations import *
 import os.path
 
 
 def export_pack_merge_safe(base_url, cribl_auth_token, pack_id, save_to_directory, worker_group=None):
     headers = {"Content-type": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
-    payload = response = None
+    payload = None
 
     try:
         if worker_group is not None:
@@ -29,7 +29,7 @@ def export_pack_merge_safe(base_url, cribl_auth_token, pack_id, save_to_director
 def export_pack_merge(base_url, cribl_auth_token, pack_id, save_to_directory, worker_group=None):
     headers = {"Content-type": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
-    payload = response = None
+    payload = None
 
     try:
         if worker_group is not None:

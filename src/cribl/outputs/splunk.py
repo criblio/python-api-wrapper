@@ -1,5 +1,5 @@
 from .output_operations import create_output, update_output, delete_output
-from ..lib.data_validation import validate_payload
+from cribl.lib.data_validation import validate_payload
 import inflection
 
 source_type = "splunk"

@@ -1,5 +1,5 @@
 from .input_operations import create_input, update_input, delete_input
-from ..lib.data_validation import validate_payload
+from cribl.lib.data_validation import validate_payload
 import inflection
 
 source_type = "confluent_cloud"

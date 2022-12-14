@@ -1,4 +1,4 @@
-from ..lib.http_operations import *
+from cribl.lib.http_operations import *
 
 
 def get_system_settings(base_url, cribl_auth_token):

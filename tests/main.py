@@ -10,8 +10,12 @@ from system.system_tests import *
 from versioning.versioning_tests import *
 from groups.group_tests import *
 from functions.function_tests import *
-from lib.lib_tests import *
 from preview.preview_tests import *
+
+from lib.lib_tests import *
+from packs.pack_tests import *
+from utilities.utlities_tests import *
+
 
 def read_config(filename):
     file = open(filename, "r")
@@ -56,13 +60,15 @@ if __name__ == '__main__':
         # system_testing(base_url, cribl_auth_token)
         # build_event_breaker_rules_from_csv(base_url=base_url, cribl_auth_token=cribl_auth_token,
         #                                    ebr_data_file=ebr_data_file, worker_group=worker_group)
-        versioning_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
+        # versioning_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
         # groups_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
         # functions_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
-        # lib_tests()
-        #preview_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
+        # lib_tests(base_url=None, cribl_auth_token=cribl_auth_token)
+        # preview_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
+        # packs_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
+        # utilities_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
 
-    # pass
+        pass
 
     else:
         print(f"Bearer cribl_auth_token not returned from API. Exiting.")

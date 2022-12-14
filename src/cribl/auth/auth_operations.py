@@ -1,4 +1,4 @@
-from ..lib.http_operations import *
+from cribl.lib.http_operations import *
 
 
 def api_get_auth_data(base_url, username, password):
