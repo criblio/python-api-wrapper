@@ -33,6 +33,7 @@ The distribution can be visualized as follows:
 │   │   ├── routes
 │   │   ├── system
 │   │   ├── users
+│   │   ├── utilities
 │   │   └── versioning
 │   └── dist
 ```
