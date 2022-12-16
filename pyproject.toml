@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cribl"
-version = "1.0"
+version = "1.0.1"
 authors = [
   { name="Rob Franz", email="rfranz@cribl.io" },
 ]
