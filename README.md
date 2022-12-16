@@ -14,28 +14,44 @@ easier creation of these items in a Stream deployment, such as S3 and Splunk sou
 ### General Structure
 The distribution can be visualized as follows:
 ```
-├── release
-├── src
-│   ├── cribl
-│   │   ├── auth
-│   │   ├── collectors
-│   │   ├── event_breaker_rules
-│   │   ├── executors
-│   │   ├── groups
-│   │   ├── inputs
-│   │   ├── lib
-│   │   ├── lookups
-│   │   ├── outputs
-│   │   ├── packs
-│   │   ├── parsers
-│   │   ├── pipelines
-│   │   ├── preview
-│   │   ├── routes
-│   │   ├── system
-│   │   ├── users
-│   │   ├── utilities
-│   │   └── versioning
-│   └── dist
+└── python-api-wrapper
+    ├── src
+    │   └── cribl
+    │       ├── auth
+    │       ├── collectors
+    │       ├── event_breaker_rules
+    │       ├── executors
+    │       ├── functions
+    │       ├── groups
+    │       ├── inputs
+    │       ├── lib
+    │       ├── lookups
+    │       ├── outputs
+    │       ├── packs
+    │       ├── parsers
+    │       ├── pipelines
+    │       ├── preview
+    │       ├── routes
+    │       ├── system
+    │       ├── users
+    │       ├── utilities
+    │       └── versioning
+    └── tests
+        ├── event_breaker_rules
+        ├── functions
+        ├── groups
+        ├── inputs
+        ├── lib
+        ├── misc
+        ├── outputs
+        ├── packs
+        ├── pipelines
+        ├── preview
+        ├── routes
+        ├── system
+        ├── users
+        ├── utilities
+        └── versioning
 ```
 
 ### Build
