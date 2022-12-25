@@ -1,4 +1,4 @@
-from cribl.functions import *
+from cribl_python_api_wrapper.functions import *
 
 
 def functions_testing(base_url, cribl_auth_token, worker_group=None):

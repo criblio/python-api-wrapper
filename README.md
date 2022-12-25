@@ -14,44 +14,42 @@ easier creation of these items in a Stream deployment, such as S3 and Splunk sou
 ### General Structure
 The distribution can be visualized as follows:
 ```
-└── python-api-wrapper
-    ├── src
-    │   └── cribl
-    │       ├── auth
-    │       ├── collectors
-    │       ├── event_breaker_rules
-    │       ├── executors
-    │       ├── functions
-    │       ├── groups
-    │       ├── inputs
-    │       ├── lib
-    │       ├── lookups
-    │       ├── outputs
-    │       ├── packs
-    │       ├── parsers
-    │       ├── pipelines
-    │       ├── preview
-    │       ├── routes
-    │       ├── system
-    │       ├── users
-    │       ├── utilities
-    │       └── versioning
-    └── tests
-        ├── event_breaker_rules
-        ├── functions
-        ├── groups
-        ├── inputs
-        ├── lib
-        ├── misc
-        ├── outputs
-        ├── packs
-        ├── pipelines
-        ├── preview
-        ├── routes
-        ├── system
-        ├── users
-        ├── utilities
-        └── versioning
+├── cribl_python_api_wrapper
+│   ├── auth
+│   ├── collectors
+│   ├── event_breaker_rules
+│   ├── executors
+│   ├── functions
+│   ├── groups
+│   ├── inputs
+│   ├── lib
+│   ├── lookups
+│   ├── outputs
+│   ├── packs
+│   ├── parsers
+│   ├── pipelines
+│   ├── preview
+│   ├── routes
+│   ├── system
+│   ├── users
+│   ├── utilities
+│   └── versioning
+└── tests
+    ├── event_breaker_rules
+    ├── functions
+    ├── groups
+    ├── inputs
+    ├── lib
+    ├── misc
+    ├── outputs
+    ├── packs
+    ├── pipelines
+    ├── preview
+    ├── routes
+    ├── system
+    ├── users
+    ├── utilities
+    └── versioning
 ```
 
 ### Build
@@ -61,16 +59,16 @@ To build the API wrapper module, execute the following command - srcdir will con
 
 This will create two files:
 
-- `cribl-1.0-py3-none-any.whl`
+- `cribl_python_api_wrapper-1.1.0-py3-none-any.whl`
 
-- `cribl-1.0.tar.gz`
+- `cribl_python_api_wrapper-1.1.0.tar.gz`
 
 The `.whl` file will be used for the installation which will be covered in the next section. 
 
 ### Installation
 The wheel file can be installed via the following command (change the path as appropriate):
 
-`python3 -m pip install /path/to/dist/cribl-1.0-py3-none-any.whl --force-reinstall`
+`python3 -m pip install /path/to/dist/cribl_python_api_wrapper-1.1.0-py3-none-any.whl --force-reinstall`
 
 ### Requests Library
 The requests library (https://requests.readthedocs.io/en/latest/) is utilized by the API wrapper module for HTTP operations. 
@@ -83,7 +81,7 @@ Before anything, the developer must retrieve an authorization token from the Cri
 
 Once these are available to the script, the API token can be fetched as follows:
 ```
-       from cribl.auth import *
+       from cribl_python_api_wrapper.auth import *
         
        response = api_get_auth_data(base_url=base_url, username=username, password=password)
         
@@ -187,7 +185,7 @@ Payloads sent to the API for create and update operations must be formatted in J
 upon the item that being created. 
 
 #### A Note on Route Operations
-Handling routes through the API is a bit different than the other configuration items. In a Stream deployment, there is one route table with an ID of "default", which is just a list of route objects.
+Handling routes through the API is a bit different from the other configuration items. In a Stream deployment, there is one route table with an ID of "default", which is just a list of route objects.
 Creating a route is actually updating "default" route table by adding the route object to the list, so the HTTP method used is PATCH, and not POST. Similarly, deleting a route involves
 updating the "default" route table by removing the route object from the list.
 
@@ -216,7 +214,7 @@ JSON payload when creating one of these components.
 
 An example of the create/update/delete cycle for an HTTP source input can be depicted as follows:
 ```
-        from cribl.inputs.http import *
+        from cribl_python_api_wrapper.inputs.http import *
         
         response = create_http_source(base_url=base_url, cribl_auth_token=cribl_auth_token, 
                                       source_id="my_http_source",

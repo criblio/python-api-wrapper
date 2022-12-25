@@ -2,6 +2,5 @@
     "username": "admin",
     "password": "admin",
     "base_url": "http://localhost:19001/api/v1",
-    "worker_group": "default",
-    "ebr_data_file": "./data.csv"
+    "worker_group": "default"
 }

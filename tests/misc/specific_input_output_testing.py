@@ -1,30 +1,30 @@
 import sys
 import json
 
-from cribl.auth import *
+from cribl_python_api_wrapper.auth import *
 
-from cribl.inputs.kafka import *
-from cribl.inputs.http import *
-from cribl.inputs.elastic import *
-from cribl.inputs.splunk import *
-from cribl.inputs.splunksearch import *
-from cribl.inputs.splunkhec import *
-from cribl.inputs.azure_blob import *
-from cribl.inputs.confluent_cloud import *
-from cribl.inputs.grafana import *
-from cribl.inputs.windows_event_logs import *
-from cribl.inputs.windows_event_forwarder import *
-from cribl.inputs.tcp import *
-from cribl.inputs.s3 import *
+from cribl_python_api_wrapper.inputs.kafka import *
+from cribl_python_api_wrapper.inputs.http import *
+from cribl_python_api_wrapper.inputs.elastic import *
+from cribl_python_api_wrapper.inputs.splunk import *
+from cribl_python_api_wrapper.inputs.splunksearch import *
+from cribl_python_api_wrapper.inputs.splunkhec import *
+from cribl_python_api_wrapper.inputs.azure_blob import *
+from cribl_python_api_wrapper.inputs.confluent_cloud import *
+from cribl_python_api_wrapper.inputs.grafana import *
+from cribl_python_api_wrapper.inputs.windows_event_logs import *
+from cribl_python_api_wrapper.inputs.windows_event_forwarder import *
+from cribl_python_api_wrapper.inputs.tcp import *
+from cribl_python_api_wrapper.inputs.s3 import *
 
-from cribl.outputs.syslog import *
-from cribl.outputs.s3 import *
-from cribl.outputs.splunk import *
-from cribl.outputs.splunk_lb import *
-from cribl.outputs.splunk_hec import *
-from cribl.outputs.output_router import *
-from cribl.outputs.webhook import *
-from cribl.outputs.sqs import *
+from cribl_python_api_wrapper.outputs.syslog import *
+from cribl_python_api_wrapper.outputs.s3 import *
+from cribl_python_api_wrapper.outputs.splunk import *
+from cribl_python_api_wrapper.outputs.splunk_lb import *
+from cribl_python_api_wrapper.outputs.splunk_hec import *
+from cribl_python_api_wrapper.outputs.output_router import *
+from cribl_python_api_wrapper.outputs.webhook import *
+from cribl_python_api_wrapper.outputs.sqs import *
 
 
 def read_config(filename):

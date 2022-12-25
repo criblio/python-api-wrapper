@@ -1,6 +1,6 @@
-from cribl.versioning import *
-from cribl.inputs import *
-from cribl.groups import *
+from cribl_python_api_wrapper.versioning import *
+from cribl_python_api_wrapper.inputs import *
+from cribl_python_api_wrapper.groups import *
 
 import time
 

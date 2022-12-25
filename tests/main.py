@@ -1,6 +1,6 @@
 import sys
 
-from cribl.auth import *
+from cribl_python_api_wrapper.auth import *
 from inputs.input_tests import *
 from outputs.outputs_tests import *
 from pipelines.pipeline_tests import *
@@ -25,7 +25,7 @@ def read_config(filename):
         if "ebr_data_file" in json_data:
             return json_data["base_url"], json_data["username"], json_data["password"], json_data["worker_group"], \
                    json_data["ebr_data_file"]
-        return json_data["base_url"], json_data["username"], json_data["password"], json_data["worker_group"]
+        return json_data["base_url"], json_data["username"], json_data["password"], json_data["worker_group"], None
     else:
         if "ebr_data_file" in json_data:
             return json_data["base_url"], json_data["username"], json_data["password"], None, json_data["ebr_data_file"]

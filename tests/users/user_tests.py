@@ -1,4 +1,4 @@
-from cribl.users import *
+from cribl_python_api_wrapper.users import *
 
 
 def users_testing(base_url, cribl_auth_token, worker_group=None):

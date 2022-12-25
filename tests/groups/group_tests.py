@@ -1,4 +1,4 @@
-from cribl.groups import *
+from cribl_python_api_wrapper.groups import *
 
 
 def groups_testing(base_url, cribl_auth_token, worker_group=None):

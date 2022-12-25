@@ -1,6 +1,6 @@
 import time
 
-from cribl.inputs import *
+from cribl_python_api_wrapper.inputs import *
 
 sleep_time = 3  # seconds
 

@@ -1,6 +1,6 @@
 import time
 
-from cribl.pipelines import *
+from cribl_python_api_wrapper.pipelines import *
 
 sleep_time = 3  # seconds
 

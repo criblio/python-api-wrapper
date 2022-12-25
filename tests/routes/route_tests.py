@@ -1,4 +1,4 @@
-from cribl.routes import *
+from cribl_python_api_wrapper.routes import *
 
 
 def routes_testing(base_url, cribl_auth_token, worker_group):

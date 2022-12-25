@@ -1,4 +1,4 @@
-from cribl.system import *
+from cribl_python_api_wrapper.system import *
 
 
 def system_testing(base_url, cribl_auth_token):

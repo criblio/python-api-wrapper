@@ -1,4 +1,4 @@
-from cribl.preview import *
+from cribl_python_api_wrapper.preview import *
 
 
 def preview_testing(base_url, cribl_auth_token, worker_group):

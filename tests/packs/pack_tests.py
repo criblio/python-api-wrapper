@@ -1,7 +1,14 @@
-from cribl.packs import *
+from cribl_python_api_wrapper.packs import *
 
 
 def packs_testing(base_url, cribl_auth_token, worker_group):
+    # download_pack(base_url, cribl_auth_token, worker_group)
+    response = get_pipelines_in_pack(base_url, cribl_auth_token, "cribl-windows-events-b1e75829-v0-5-5_orig",
+                                     worker_group=worker_group)
+    print(f"response: %s" % response.text)
+
+
+def download_pack(base_url, cribl_auth_token, worker_group):
     packs = get_pack_list(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
     packs_list = packs["items"]
     for pack in packs_list:

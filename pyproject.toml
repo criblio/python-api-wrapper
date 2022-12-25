@@ -3,8 +3,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "cribl"
-version = "1.0.1"
+name = "cribl_python_api_wrapper"
+version = "1.1.0"
 authors = [
   { name="Rob Franz", email="rfranz@cribl.io" },
 ]
@@ -16,3 +16,6 @@ dependencies = [
     "requests",
     "inflection"
 ]
+
+[project.urls]
+"Homepage" = "https://github.com/criblio/python-api-wrapper"

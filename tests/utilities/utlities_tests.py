@@ -1,4 +1,4 @@
-from cribl.utilities import *
+from cribl_python_api_wrapper.utilities import *
 
 
 def utilities_testing(base_url, cribl_auth_token, worker_group):
