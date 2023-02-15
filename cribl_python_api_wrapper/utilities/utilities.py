@@ -13,3 +13,13 @@ def fetch_config(base_url, cribl_auth_token, worker_group):
     packs = get_pack_list(base_url, cribl_auth_token, worker_group)
 
     return route_data, pipeline_data, input_data, output_data, packs
+
+
+def fetch_latest_cribl_version_info():
+    payload = None
+
+    try:
+        return get("https://cdn.cribl.io/versions.json", headers=None, payload=payload)
+
+    except Exception as e:
+        raise Exception("General exception raised while attempting to get version availability: %s" % str(e))
