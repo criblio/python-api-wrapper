@@ -79,7 +79,10 @@ Before anything, the developer must retrieve an authorization token from the Cri
 - username - the user that will be making the API calls, e.g. admin
 - password - the user's password
 
-Once these are available to the script, the API token can be fetched as follows:
+Depending on your deployment, you fetch the token in one of two ways as documented below.
+
+#### Fetching API Token - Non-Cloud Deployment
+The API token can be fetched from the API as follows:
 ```
        from cribl_python_api_wrapper.auth import *
         
@@ -89,7 +92,13 @@ Once these are available to the script, the API token can be fetched as follows:
             cribl_auth_token = response.json()["token"]
 
 ```
+
 The "token" should be present in the response's JSON payload if the request is successful. This value should be saved and used in subsequent calls to the API.
+
+#### Fetching API Token - Cloud Deployment
+The /auth/login endpoint is not accessible in a Cloud instance. Follow the workaround documented at https://docs.cribl.io/stream/api-tutorials/#criblcloud-free-tier to 
+retrieve the token. You can set `cribl_auth_token` to the value of the token and use it in subsequent API calls.
+
 
 #### Get/Create/Update/Delete of Configuration Items
 The configuration items from the above list follow a get/create/update/delete
