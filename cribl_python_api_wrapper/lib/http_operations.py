@@ -6,12 +6,11 @@ import json
 # returns Response object
 
 
-def get(url, headers, payload):
+def get(url, headers, payload, stream=False):
     if payload is not None:
-        r = requests.get(url, data=json.dumps(payload), headers=headers)
+        return requests.get(url, data=json.dumps(payload), headers=headers, stream=stream)
     else:
-        r = requests.get(url, headers=headers)
-    return r
+        return requests.get(url, headers=headers, stream=stream)
 
 
 def post(url, headers, payload):
@@ -27,5 +26,8 @@ def patch(url, headers, payload):
     return requests.patch(url, data=json.dumps(payload), headers=headers)
 
 
-def delete(url, headers):
-    return requests.delete(url, headers=headers)
+def delete(url, headers, payload=None):
+    if payload is not None:
+        return requests.delete(url, headers=headers, data=json.dumps(payload))
+    else:
+        return requests.delete(url, headers=headers)
