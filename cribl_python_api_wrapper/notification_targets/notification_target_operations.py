@@ -36,9 +36,6 @@ def create_notification_target(base_url, cribl_auth_token, create_config):
 
     payload = create_config
 
-    if "status" in payload:
-        del payload["status"]
-
     try:
         return post(base_url + "/notification-targets", headers=headers, payload=payload)
     except Exception as e:
