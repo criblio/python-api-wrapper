@@ -29,7 +29,7 @@ def get_output_by_id(base_url, cribl_auth_token, output_id, worker_group=None):
             return get(base_url + "/m/" + worker_group + "/system/outputs/" + output_id,
                        headers=headers, payload=payload)
         else:
-            return get(base_url + "/m/" + worker_group + "/system/outputs/" + output_id,
+            return get(base_url + "/system/outputs/" + output_id,
                        headers=headers, payload=payload)
 
     except Exception as e:
