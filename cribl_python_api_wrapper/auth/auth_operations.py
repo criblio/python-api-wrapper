@@ -18,3 +18,17 @@ def api_get_auth_data(base_url, username, password):
 
     except Exception as e:
         raise Exception("General exception raised while attempting to get auth data from Cribl: %s" % str(e))
+
+
+def get_cloud_access_token(client_id, client_secret):
+    headers = {"Content-type": "application/json"}
+    payload = {
+        "grant_type": "client_credentials",
+        "client_id": client_id,
+        "client_secret": client_secret,
+        "audience": "https://api.cribl.cloud"
+    }
+    try:
+        return post("https://login.cribl.cloud/oauth/token", headers=headers, payload=payload)
+    except Exception as e:
+        raise Exception("General exception raised while attempting to fetch cloud access token: %s" % str(e))
