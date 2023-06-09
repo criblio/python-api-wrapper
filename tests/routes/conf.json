@@ -1,0 +1,6 @@
+{
+  "username": "admin",
+  "password": "",
+  "base_url": "http://nuc-ubuntu:9000/api/v1",
+  "worker_group": "testing-wg"
+}
