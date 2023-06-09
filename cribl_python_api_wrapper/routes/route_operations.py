@@ -36,6 +36,7 @@ def add_route(base_url, cribl_auth_token, route_config, position="start", worker
     try:
         # get a list of the existing routes
         current_routes = get_routes(base_url, cribl_auth_token, worker_group).json()
+
         route_exists = False
 
         if "items" in current_routes and len(current_routes["items"]) != 0:
@@ -94,9 +95,10 @@ def _update_routes(base_url, cribl_auth_token, config, worker_group=None):
     headers = {"Content-type": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
     payload = config
+
     try:
         if worker_group is not None:
-            return patch(base_url + "/m/" + worker_group + "/routes/" + worker_group, headers=headers, payload=payload)
+            return patch(base_url + "/m/" + worker_group + "/routes/default", headers=headers, payload=payload)
         else:
             return patch(base_url + "/routes/default", headers=headers, payload=payload)
 
