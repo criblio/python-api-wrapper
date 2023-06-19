@@ -65,8 +65,8 @@ def create_collector(base_url, cribl_auth_token, create_config, worker_group=Non
             return post(base_url + "/m/" + worker_group + "/lib/jobs",
                         headers=headers, payload=payload)
         else:
-            return get(base_url + "/lib/jobs",
-                       headers=headers, payload=payload)
+            return post(base_url + "/lib/jobs",
+                        headers=headers, payload=payload)
 
     except Exception as e:
         raise Exception(
