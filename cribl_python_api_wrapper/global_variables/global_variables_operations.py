@@ -1,7 +1,7 @@
 from cribl_python_api_wrapper.lib.http_operations import *
 
 
-def get_global_variables(base_url, cribl_auth_token, worker_group=None, fleet=None):
+def get_global_variables(base_url, cribl_auth_token, worker_group=None, fleet=None, verify=True):
     headers = {"Content-type": "application/json",
                "Accept": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
@@ -17,16 +17,17 @@ def get_global_variables(base_url, cribl_auth_token, worker_group=None, fleet=No
                             " or fleet at a time.")
         if group is not None:
             return get(base_url + "/m/" + group + "/lib/vars",
-                       headers=headers, payload=payload)
+                       headers=headers, payload=payload, verify=verify)
         else:
             return get(base_url + "/lib/vars",
-                       headers=headers, payload=payload)
+                       headers=headers, payload=payload, verify=verify)
 
     except Exception as e:
         raise Exception("General exception raised while attempting to get list of global variables: %s" % str(e))
 
 
-def get_global_variable_by_id(base_url, cribl_auth_token, global_variable_id, worker_group=None, fleet=None):
+def get_global_variable_by_id(base_url, cribl_auth_token, global_variable_id, worker_group=None, fleet=None,
+                              verify=True):
     headers = {"Content-type": "application/json",
                "Accept": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
@@ -42,18 +43,18 @@ def get_global_variable_by_id(base_url, cribl_auth_token, global_variable_id, wo
                             " or fleet at a time.")
         if group is not None:
             return get(base_url + "/m/" + group + "/lib/vars/" + global_variable_id,
-                       headers=headers, payload=payload)
+                       headers=headers, payload=payload, verify=verify)
         else:
             # single instance
             return get(base_url + "/lib/vars/" + global_variable_id,
-                       headers=headers, payload=payload)
+                       headers=headers, payload=payload, verify=verify)
 
     except Exception as e:
         raise Exception("General exception raised while attempting to get global variable %s from Cribl: %s" % (
             global_variable_id, str(e)))
 
 
-def create_global_variable(base_url, cribl_auth_token, create_config, worker_group=None, fleet=None):
+def create_global_variable(base_url, cribl_auth_token, create_config, worker_group=None, fleet=None, verify=True):
     headers = {"Content-type": "application/json",
                "Accept": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
@@ -73,16 +74,16 @@ def create_global_variable(base_url, cribl_auth_token, create_config, worker_gro
                             " or fleet at a time.")
         if group is not None:
             return post(base_url + "/m/" + group + "/lib/vars",
-                        headers=headers, payload=payload)
+                        headers=headers, payload=payload, verify=verify)
         else:
             # single instance
-            return post(base_url + "/lib/vars", headers=headers, payload=payload)
+            return post(base_url + "/lib/vars", headers=headers, payload=payload, verify=verify)
     except Exception as e:
         raise Exception("General exception raised while attempting to create global variable: %s" % str(e))
 
 
 def update_global_variable(base_url, cribl_auth_token, global_variable_id, update_config, worker_group=None,
-                           fleet=None):
+                           fleet=None, verify=True):
     headers = {"Content-type": "application/json",
                "Accept": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
@@ -98,17 +99,17 @@ def update_global_variable(base_url, cribl_auth_token, global_variable_id, updat
                             " or fleet at a time.")
         if group is not None:
             return patch(base_url + "/m/" + group + "/lib/vars/" + global_variable_id,
-                         headers=headers, payload=payload)
+                         headers=headers, payload=payload, verify=verify)
         else:
             # single instance
             return patch(base_url + "/lib/vars/" + global_variable_id,
-                         headers=headers, payload=payload)
+                         headers=headers, payload=payload, verify=verify)
     except Exception as e:
         raise Exception(
             "General exception raised while attempting to update global_variable %s: %s" % (global_variable_id, str(e)))
 
 
-def delete_global_variable(base_url, cribl_auth_token, global_variable_id, worker_group=None, fleet=None):
+def delete_global_variable(base_url, cribl_auth_token, global_variable_id, worker_group=None, fleet=None, verify=True):
     headers = {"Content-type": "application/json",
                "Accept": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
@@ -122,11 +123,11 @@ def delete_global_variable(base_url, cribl_auth_token, global_variable_id, worke
                             " or fleet at a time.")
         if group is not None:
             return delete(base_url + "/m/" + group + "/lib/vars/" + global_variable_id,
-                          headers=headers)
+                          headers=headers, verify=verify)
         else:
             # single instance
             return delete(base_url + "/lib/vars/" + global_variable_id,
-                          headers=headers)
+                          headers=headers, verify=verify)
 
     except Exception as e:
         raise Exception(

@@ -2,18 +2,26 @@ from cribl_python_api_wrapper.lib.http_operations import *
 import os.path
 
 
-def export_pack_merge_safe(base_url, cribl_auth_token, pack_id, save_to_directory, worker_group=None):
+def export_pack_merge_safe(base_url, cribl_auth_token, pack_id, save_to_directory, worker_group=None, fleet=None,
+                           verify=True):
     headers = {"Content-type": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
     payload = None
 
     try:
-        if worker_group is not None:
-            response = get(base_url + "/m/" + worker_group + "/packs/" + pack_id + "/export?mode=merge_safe",
-                           headers=headers, payload=payload)
+        if worker_group is not None and fleet is None:
+            group = worker_group
+        elif fleet is not None and worker_group is None:
+            group = fleet
+        else:
+            raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
+                            " or fleet at a time.")
+        if group is not None:
+            response = get(base_url + "/m/" + group + "/packs/" + pack_id + "/export?mode=merge_safe",
+                           headers=headers, payload=payload, verify=verify)
         else:
             response = get(base_url + "/packs/" + pack_id + "export?mode=merge_safe",
-                           headers=headers, payload=payload)
+                           headers=headers, payload=payload, verify=verify)
 
         if response.status_code == 200:
             pack = open(save_to_directory + "/" + pack_id + ".crbl", "wb")
@@ -26,18 +34,26 @@ def export_pack_merge_safe(base_url, cribl_auth_token, pack_id, save_to_director
     return response
 
 
-def export_pack_merge(base_url, cribl_auth_token, pack_id, save_to_directory, worker_group=None):
+def export_pack_merge(base_url, cribl_auth_token, pack_id, save_to_directory, worker_group=None, fleet=None,
+                      verify=True):
     headers = {"Content-type": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
     payload = None
 
     try:
-        if worker_group is not None:
-            response = get(base_url + "/m/" + worker_group + "/packs/" + pack_id + "/export?mode=merge",
-                           headers=headers, payload=payload)
+        if worker_group is not None and fleet is None:
+            group = worker_group
+        elif fleet is not None and worker_group is None:
+            group = fleet
+        else:
+            raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
+                            " or fleet at a time.")
+        if group is not None:
+            response = get(base_url + "/m/" + group + "/packs/" + pack_id + "/export?mode=merge",
+                           headers=headers, payload=payload, verify=verify)
         else:
             response = get(base_url + "/packs/" + pack_id + "export?mode=merge",
-                           headers=headers, payload=payload)
+                           headers=headers, payload=payload, verify=verify)
 
         if response.status_code == 200:
             pack = open(save_to_directory + "/" + pack_id + ".crbl", "wb")
@@ -50,59 +66,92 @@ def export_pack_merge(base_url, cribl_auth_token, pack_id, save_to_directory, wo
     return response
 
 
-def get_pack_list(base_url, cribl_auth_token, worker_group=None):
+def get_pack_list(base_url, cribl_auth_token, worker_group=None, fleet=None, verify=True):
     headers = {"Content-type": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
     payload = None
 
     try:
-        if worker_group is not None:
-            return get(base_url + "/m/" + worker_group + "/packs",
-                       headers=headers, payload=payload)
+        if worker_group is not None and fleet is None:
+            group = worker_group
+        elif fleet is not None and worker_group is None:
+            group = fleet
+        else:
+            raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
+                            " or fleet at a time.")
+        if group is not None:
+            return get(base_url + "/m/" + group + "/packs",
+                       headers=headers, payload=payload, verify=verify)
         else:
             return get(base_url + "/packs",
-                       headers=headers, payload=payload)
+                       headers=headers, payload=payload, verify=verify)
 
     except Exception as e:
         raise Exception("General exception raised while attempting to get list of installed packs: %s " % str(e))
 
 
-def get_pipelines_in_pack(base_url, cribl_auth_token, pack_id, worker_group=None):
+def get_pipelines_in_pack(base_url, cribl_auth_token, pack_id, worker_group=None, fleet=None, verify=True):
+    headers = {"Content-type": "application/json",
+               "Authorization": "Bearer " + cribl_auth_token}
+    payload = None
+    try:
+        if worker_group is not None and fleet is None:
+            group = worker_group
+        elif fleet is not None and worker_group is None:
+            group = fleet
+        else:
+            raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
+                            " or fleet at a time.")
+        if group is not None:
+            return get(base_url + "/m/" + group + "/p/" + pack_id + "/pipelines",
+                       headers=headers, payload=payload, verify=verify)
+        else:
+            return get(base_url + "/p/" + pack_id + "/pipelines",
+                       headers=headers, payload=payload, verify=verify)
+    except Exception as e:
+        raise Exception("General exception raised while attempting to get list of pipelines in pack: %s " % str(e))
+
+
+def get_routes_in_pack(base_url, cribl_auth_token, pack_id, worker_group=None, fleet=None, verify=True):
     headers = {"Content-type": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
     payload = None
 
-    if worker_group is not None:
-        return get(base_url + "/m/" + worker_group + "/p/" + pack_id + "/pipelines",
-                   headers=headers, payload=payload)
-    else:
-        return get(base_url + "/p/" + pack_id + "/pipelines",
-                   headers=headers, payload=payload)
+    try:
+        if worker_group is not None and fleet is None:
+            group = worker_group
+        elif fleet is not None and worker_group is None:
+            group = fleet
+        else:
+            raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
+                            " or fleet at a time.")
+        if group is not None:
+            return get(base_url + "/m/" + group + "/p/" + pack_id + "/routes",
+                       headers=headers, payload=payload, verify=verify)
+        else:
+            return get(base_url + "/p/" + pack_id + "/routes",
+                       headers=headers, payload=payload, verify=verify)
+    except Exception as e:
+        raise Exception("General exception raised while attempting to get list of pipelines in pack: %s " % str(e))
 
 
-def get_routes_in_pack(base_url, cribl_auth_token, pack_id, worker_group=None):
-    headers = {"Content-type": "application/json",
-               "Authorization": "Bearer " + cribl_auth_token}
-    payload = None
-
-    if worker_group is not None:
-        return get(base_url + "/m/" + worker_group + "/p/" + pack_id + "/routes",
-                   headers=headers, payload=payload)
-    else:
-        return get(base_url + "/p/" + pack_id + "/routes",
-                   headers=headers, payload=payload)
-
-
-def upload_and_install_pack(base_url, cribl_auth_token, pack_file, worker_group=None):
+def upload_and_install_pack(base_url, cribl_auth_token, pack_file, worker_group=None, fleet=None, verify=True):
     headers = {"Authorization": "Bearer " + cribl_auth_token}
 
     try:
-        if worker_group is not None:
-            response = put(base_url + "/m/" + worker_group + "/packs?filename=" + os.path.basename(pack_file),
-                           headers=headers, data=open(pack_file, 'rb'))
+        if worker_group is not None and fleet is None:
+            group = worker_group
+        elif fleet is not None and worker_group is None:
+            group = fleet
+        else:
+            raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
+                            " or fleet at a time.")
+        if group is not None:
+            response = put(base_url + "/m/" + group + "/packs?filename=" + os.path.basename(pack_file),
+                           headers=headers, data=open(pack_file, 'rb'), verify=verify)
         else:
             response = put(base_url + "/packs?filename=" + os.path.basename(pack_file), headers=headers,
-                           data=open(pack_file, 'rb'))
+                           data=open(pack_file, 'rb'), verify=verify)
 
         if response.status_code == 200:
             if "source" in response.json():
@@ -117,33 +166,40 @@ def upload_and_install_pack(base_url, cribl_auth_token, pack_file, worker_group=
 
             if worker_group is not None:
                 response = post(base_url + "/m/" + worker_group + "/packs",
-                                headers=headers, payload=payload)
+                                headers=headers, payload=payload, verify=verify)
             else:
                 response = post(base_url + "/packs",
-                                headers=headers, payload=payload)
+                                headers=headers, payload=payload, verify=verify)
     except Exception as e:
         raise Exception("General exception raised while attempting to upload and install pack: %s " % str(e))
 
     return response
 
 
-def upload_pack(base_url, cribl_auth_token, pack_file, worker_group=None):
+def upload_pack(base_url, cribl_auth_token, pack_file, worker_group=None, fleet=None, verify=True):
     headers = {"Authorization": "Bearer " + cribl_auth_token}
 
     try:
-        if worker_group is not None:
-            response = put(base_url + "/m/" + worker_group + "/packs?filename=" + os.path.basename(pack_file),
-                           headers=headers, data=open(pack_file, 'rb'))
+        if worker_group is not None and fleet is None:
+            group = worker_group
+        elif fleet is not None and worker_group is None:
+            group = fleet
+        else:
+            raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
+                            " or fleet at a time.")
+        if group is not None:
+            response = put(base_url + "/m/" + group + "/packs?filename=" + os.path.basename(pack_file),
+                           headers=headers, data=open(pack_file, 'rb'), verify=verify)
         else:
             response = put(base_url + "/packs?filename=" + os.path.basename(pack_file), headers=headers,
-                           data=open(pack_file, 'rb'))
+                           data=open(pack_file, 'rb'), verify=verify)
     except Exception as e:
         raise Exception("General exception raised while attempting to upload pack: %s " % str(e))
 
     return response
 
 
-def install_pack(base_url, cribl_auth_token, pack_source, pack_id=None, worker_group=None):
+def install_pack(base_url, cribl_auth_token, pack_source, pack_id=None, worker_group=None, fleet=None, verify=True):
     headers = {"Content-type": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
     payload = {
@@ -154,8 +210,16 @@ def install_pack(base_url, cribl_auth_token, pack_source, pack_id=None, worker_g
         if pack_id is not None:
             payload["id"] = pack_id
 
-        if worker_group is not None:
-            response = post(base_url + "/m/" + worker_group + "/packs",
+        if worker_group is not None and fleet is None:
+            group = worker_group
+        elif fleet is not None and worker_group is None:
+            group = fleet
+        else:
+            raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
+                            " or fleet at a time.")
+
+        if group is not None:
+            response = post(base_url + "/m/" + group + "/packs",
                             headers=headers, payload=payload)
         else:
             response = post(base_url + "/packs",

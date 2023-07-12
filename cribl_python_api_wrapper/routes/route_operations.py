@@ -1,7 +1,7 @@
 from cribl_python_api_wrapper.lib.http_operations import *
 
 
-def get_routes(base_url, cribl_auth_token, worker_group=None, fleet=None):
+def get_routes(base_url, cribl_auth_token, worker_group=None, fleet=None, verify=True):
     headers = {"Content-type": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
     payload = None
@@ -16,14 +16,14 @@ def get_routes(base_url, cribl_auth_token, worker_group=None, fleet=None):
                             " or fleet at a time.")
         if group is not None:
             return get(base_url + "/m/" + group + "/routes",
-                       headers=headers, payload=payload)
+                       headers=headers, payload=payload, verify=verify)
         else:
-            return get(base_url + "/routes", headers=headers, payload=payload)
+            return get(base_url + "/routes", headers=headers, payload=payload, verify=verify)
     except Exception as e:
         raise Exception("General exception raised while attempting to get route listing from Cribl: %s" % str(e))
 
 
-def get_routes_by_id(base_url, cribl_auth_token, route_id, worker_group=None, fleet=None):
+def get_routes_by_id(base_url, cribl_auth_token, route_id, worker_group=None, fleet=None, verify=True):
     headers = {"Content-type": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
     payload = None
@@ -38,14 +38,14 @@ def get_routes_by_id(base_url, cribl_auth_token, route_id, worker_group=None, fl
                             " or fleet at a time.")
         if group is not None:
             return get(base_url + "/m/" + group + "/routes" + "/" + route_id,
-                       headers=headers, payload=payload)
+                       headers=headers, payload=payload, verify=verify)
         else:
-            return get(base_url + "/routes" + "/" + route_id, headers=headers, payload=payload)
+            return get(base_url + "/routes" + "/" + route_id, headers=headers, payload=payload, verify=verify)
     except Exception as e:
         raise Exception("General exception raised while attempting to get route listing from Cribl: %s" % str(e))
 
 
-def add_route(base_url, cribl_auth_token, route_config, position="start", worker_group=None, fleet=None):
+def add_route(base_url, cribl_auth_token, route_config, position="start", worker_group=None, fleet=None, verify=True):
     # Attempt to add new route
     try:
         if worker_group is not None and fleet is None:
@@ -82,18 +82,19 @@ def add_route(base_url, cribl_auth_token, route_config, position="start", worker
                 if worker_group is not None and fleet is None:
                     return _update_routes(base_url, cribl_auth_token,
                                           {"id": "default", "routes": current_routes["items"][0]["routes"]},
-                                          worker_group=worker_group)
+                                          worker_group=worker_group, verify=verify)
                 elif fleet is not None and worker_group is None:
                     return _update_routes(base_url, cribl_auth_token,
                                           {"id": "default", "routes": current_routes["items"][0]["routes"]},
-                                          fleet=fleet)
+                                          fleet=fleet, verify=verify)
                 elif fleet is not None and worker_group is not None:
                     raise Exception(
                         "Worker group and fleet were both set; operation can be performed on only one worker group"
                         " or fleet at a time.")
                 else:
                     return _update_routes(base_url, cribl_auth_token,
-                                          {"id": "default", "routes": current_routes["items"][0]["routes"]})
+                                          {"id": "default", "routes": current_routes["items"][0]["routes"]},
+                                          verify=verify)
 
 
             else:
@@ -102,14 +103,14 @@ def add_route(base_url, cribl_auth_token, route_config, position="start", worker
         raise Exception("General exception raised while attempting to add route: %s" % str(e))
 
 
-def replace_route_table(base_url, cribl_auth_token, new_route_table_config, worker_group=None, fleet=None):
+def replace_route_table(base_url, cribl_auth_token, new_route_table_config, worker_group=None, fleet=None, verify=True):
     try:
         if worker_group is not None and fleet is None:
             return _update_routes(base_url=base_url, cribl_auth_token=cribl_auth_token, config=new_route_table_config,
-                                  worker_group=worker_group)
+                                  worker_group=worker_group, verify=verify)
         elif fleet is not None and worker_group is None:
             return _update_routes(base_url=base_url, cribl_auth_token=cribl_auth_token, config=new_route_table_config,
-                                  fleet=fleet)
+                                  fleet=fleet, verify=verify)
         else:
             raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
                             " or fleet at a time.")
@@ -118,7 +119,7 @@ def replace_route_table(base_url, cribl_auth_token, new_route_table_config, work
         raise Exception("General exception raised while attempting to replace route table: %s" % str(e))
 
 
-def delete_route(base_url, cribl_auth_token, route_id, worker_group=None, fleet=None):
+def delete_route(base_url, cribl_auth_token, route_id, worker_group=None, fleet=None, verify=True):
     try:
         current_routes = get_routes(base_url, cribl_auth_token, worker_group).json()
         route_idx = -1
@@ -137,11 +138,11 @@ def delete_route(base_url, cribl_auth_token, route_id, worker_group=None, fleet=
                     if worker_group is not None and fleet is None:
                         return _update_routes(base_url, cribl_auth_token,
                                               {"id": "default", "routes": current_routes["items"][0]["routes"]},
-                                              worker_group=worker_group)
+                                              worker_group=worker_group, verify=verify)
                     elif fleet is not None and worker_group is None:
                         return _update_routes(base_url, cribl_auth_token,
                                               {"id": "default", "routes": current_routes["items"][0]["routes"]},
-                                              worker_group=fleet)
+                                              worker_group=fleet, verify=verify)
                     else:
                         raise Exception(
                             "Worker group and fleet were both set; operation can be performed on only one worker group"
@@ -155,7 +156,7 @@ def delete_route(base_url, cribl_auth_token, route_id, worker_group=None, fleet=
         raise Exception("General exception raised while attempting to delete route: %s" % str(e))
 
 
-def _update_routes(base_url, cribl_auth_token, config, worker_group=None, fleet=None):
+def _update_routes(base_url, cribl_auth_token, config, worker_group=None, fleet=None, verify=True):
     # replace the route table with a new configuration
 
     headers = {"Content-type": "application/json",
@@ -164,14 +165,15 @@ def _update_routes(base_url, cribl_auth_token, config, worker_group=None, fleet=
 
     try:
         if worker_group is not None and fleet is None:
-            return patch(base_url + "/m/" + worker_group + "/routes/default", headers=headers, payload=payload)
+            return patch(base_url + "/m/" + worker_group + "/routes/default", headers=headers, payload=payload,
+                         verify=verify)
         elif fleet is not None and worker_group is None:
-            return patch(base_url + "/m/" + fleet + "/routes/default", headers=headers, payload=payload)
+            return patch(base_url + "/m/" + fleet + "/routes/default", headers=headers, payload=payload, verify=verify)
         elif fleet is not None and worker_group is not None:
             raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
                             " or fleet at a time.")
         else:
-            return patch(base_url + "/routes/default", headers=headers, payload=payload)
+            return patch(base_url + "/routes/default", headers=headers, payload=payload, verify=verify)
 
     except Exception as e:
         raise Exception("General exception raised while attempting to add routes to Cribl: %s" % str(e))
