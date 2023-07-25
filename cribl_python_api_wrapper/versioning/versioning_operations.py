@@ -57,7 +57,7 @@ def get_working_tree_status(base_url, cribl_auth_token):
         raise Exception("General exception raised while attempting to get list branches: %s" % str(e))
 
 
-def create_commit(base_url, cribl_auth_token, commit_config):
+def create_commit(base_url, cribl_auth_token, commit_config, verify=True):
     headers = {"Content-type": "application/json",
                "Accept": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
@@ -65,7 +65,7 @@ def create_commit(base_url, cribl_auth_token, commit_config):
     payload = commit_config
 
     try:
-        return post(base_url + "/version/commit", headers=headers, payload=payload)
+        return post(base_url + "/version/commit", headers=headers, payload=payload, verify=verify)
     except Exception as e:
         raise Exception("General exception raised while attempting to create commit: %s" % str(e))
 
