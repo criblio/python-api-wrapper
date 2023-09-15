@@ -23,6 +23,14 @@ def api_get_auth_data(base_url, username, password, verify=True):
 
 def get_cloud_access_token(client_id, client_secret, login_server="https://login.cribl.cloud/oauth/token",
                            audience="https://api.cribl.cloud"):
+    """
+    Get access token from Cloud login service
+    :param client_id:
+    :param client_secret:
+    :param login_server:
+    :param audience:
+    :return:
+    """
     headers = {"Content-type": "application/json"}
     payload = {
         "grant_type": "client_credentials",
