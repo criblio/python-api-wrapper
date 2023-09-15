@@ -1,97 +1,120 @@
 from cribl_python_api_wrapper.lib.http_operations import *
 
 
-def get_parsers(base_url, cribl_auth_token, worker_group=None):
-    headers = {"Content-type": "application/json",
-               "Authorization": "Bearer " + cribl_auth_token}
-    payload = parsers = None
-
-    try:
-        if worker_group is not None:
-            response = get(base_url + "/m/" + worker_group + "/lib/parsers",
-                           headers=headers, payload=payload)
-        else:
-            response = get(base_url + "/lib/parsers",
-                           headers=headers, payload=payload)
-
-        if response.status_code == 200:
-            if response.json() and response.json()["items"]:
-                parsers = response.json()
-
-    except Exception as e:
-        raise Exception(
-            "General exception raised while attempting to get parser information from Cribl: %s" % str(e))
-
-    return parsers
-
-
-def get_parser(base_url, cribl_auth_token, parser_id, worker_group=None):
+def get_parsers(base_url, cribl_auth_token, worker_group=None, fleet=None, group=None, verify=True):
     headers = {"Content-type": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
     payload = None
 
     try:
-        if worker_group is not None:
-            response = get(base_url + "/m/" + worker_group + "/lib/parsers" + "/" + parser_id,
-                           headers=headers, payload=payload)
+        if worker_group is not None and fleet is None:
+            group = worker_group
+        elif fleet is not None and worker_group is None:
+            group = fleet
+        elif fleet is not None and worker_group is not None:
+            raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
+                            " or fleet at a time.")
+
+        if group is not None:
+            return get(base_url + "/m/" + group + "/lib/parsers",
+                       headers=headers, payload=payload, verify=verify)
         else:
-            response = get(base_url + "/lib/parsers" + "/" + parser_id,
-                           headers=headers, payload=payload)
+            return get(base_url + "/lib/parsers",
+                       headers=headers, payload=payload)
+
+    except Exception as e:
+        raise Exception(
+            "General exception raised while attempting to get parser information from Cribl: %s" % str(e))
+
+
+def get_parser(base_url, cribl_auth_token, parser_id, worker_group=None, fleet=None, group=None, verify=True):
+    headers = {"Content-type": "application/json",
+               "Authorization": "Bearer " + cribl_auth_token}
+    payload = None
+
+    try:
+        if worker_group is not None and fleet is None:
+            group = worker_group
+        elif fleet is not None and worker_group is None:
+            group = fleet
+        elif fleet is not None and worker_group is not None:
+            raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
+                            " or fleet at a time.")
+        if group is not None:
+            return get(base_url + "/m/" + group + "/lib/parsers" + "/" + parser_id,
+                       headers=headers, payload=payload, verify=verify)
+        else:
+            return get(base_url + "/lib/parsers" + "/" + parser_id,
+                       headers=headers, payload=payload, verify=verify)
     except Exception as e:
         raise Exception("General exception raised while attempting to create pipeline: %s " % str(e))
 
-    return response
 
-
-def create_parser(base_url, cribl_auth_token, config, worker_group=None):
+def create_parser(base_url, cribl_auth_token, config, worker_group=None, fleet=None, group=None, verify=True):
     headers = {"Content-type": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
     payload = config
 
     try:
-        if worker_group is not None:
-            response = post(base_url + "/m/" + worker_group + "/lib/parsers/",
-                            headers=headers, payload=payload)
+        if worker_group is not None and fleet is None:
+            group = worker_group
+        elif fleet is not None and worker_group is None:
+            group = fleet
+        elif fleet is not None and worker_group is not None:
+            raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
+                            " or fleet at a time.")
+        if group is not None:
+            return post(base_url + "/m/" + group + "/lib/parsers/",
+                        headers=headers, payload=payload, verify=verify)
         else:
-            response = post(base_url + "/lib/parsers",
-                            headers=headers, payload=payload)
+            return post(base_url + "/lib/parsers",
+                        headers=headers, payload=payload, verify=verify)
     except Exception as e:
         raise Exception("General exception raised while attempting to create pipeline: %s " % str(e))
 
-    return response
 
-
-def update_parser(base_url, cribl_auth_token, parser_id, config, worker_group=None):
+def update_parser(base_url, cribl_auth_token, parser_id, config, worker_group=None, fleet=None, group=None,
+                  verify=True):
     headers = {"Content-type": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
     payload = config
 
     try:
-        if worker_group is not None:
-            response = patch(base_url + "/m/" + worker_group + "/lib/parsers/" + parser_id,
-                             headers=headers, payload=payload)
+        if worker_group is not None and fleet is None:
+            group = worker_group
+        elif fleet is not None and worker_group is None:
+            group = fleet
+        elif fleet is not None and worker_group is not None:
+            raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
+                            " or fleet at a time.")
+        if group is not None:
+            return patch(base_url + "/m/" + group + "/lib/parsers/" + parser_id,
+                         headers=headers, payload=payload, verify=verify)
         else:
-            response = patch(base_url + "/lib/parsers/" + parser_id,
-                             headers=headers, payload=payload)
+            return patch(base_url + "/lib/parsers/" + parser_id,
+                         headers=headers, payload=payload, verify=verify)
     except Exception as e:
         raise Exception("General exception raised while attempting to update parser: %s " % str(e))
 
-    return response
 
-
-def delete_parser(base_url, cribl_auth_token, parser_id, worker_group=None):
+def delete_parser(base_url, cribl_auth_token, parser_id, worker_group=None, fleet=None, group=None, verify=True):
     headers = {"Content-type": "application/json",
                "Accept": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
     try:
-        if worker_group is not None:
-            response = delete(base_url + "/m/" + worker_group + "/lib/parsers/" + parser_id,
-                              headers=headers)
+        if worker_group is not None and fleet is None:
+            group = worker_group
+        elif fleet is not None and worker_group is None:
+            group = fleet
+        elif fleet is not None and worker_group is not None:
+            raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
+                            " or fleet at a time.")
+        if group is not None:
+            return delete(base_url + "/m/" + group + "/lib/parsers/" + parser_id,
+                          headers=headers, verify=verify)
         else:
-            response = delete(base_url + "/system/inputs/" + parser_id,
-                              headers=headers)
+            return delete(base_url + "/lib/parsers/" + parser_id,
+                          headers=headers, verify=verify)
 
     except Exception as e:
         raise Exception("General exception raised while attempting to delete input %s: %s" % (parser_id, str(e)))
-
-    return response

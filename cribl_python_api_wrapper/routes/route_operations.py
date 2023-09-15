@@ -119,6 +119,31 @@ def replace_route_table(base_url, cribl_auth_token, new_route_table_config, work
         raise Exception("General exception raised while attempting to replace route table: %s" % str(e))
 
 
+def replace_route_table_in_pack(base_url, cribl_auth_token, new_route_table_config, pack_id,
+                                worker_group=None,
+                                fleet=None, group=None, verify=True):
+    headers = {"Content-type": "application/json",
+               "Authorization": "Bearer " + cribl_auth_token}
+    payload = new_route_table_config
+
+    try:
+        if worker_group is not None and fleet is None:
+            group = worker_group
+        elif fleet is not None and worker_group is None:
+            group = fleet
+        elif fleet is not None and worker_group is not None:
+            raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
+                            " or fleet at a time.")
+        if group is not None:
+            return patch(base_url + "/m/" + group + "/p/" + pack_id + "/routes" + "/default",
+                         headers=headers, payload=payload, verify=verify)
+        else:
+            return patch(base_url + "/p/" + group + "/p/" + pack_id + "/routes" + "/default",
+                         headers=headers, payload=payload, verify=verify)
+    except Exception as e:
+        raise Exception("General exception raised while attempting to update routes in pack: %s " % str(e))
+
+
 def delete_route(base_url, cribl_auth_token, route_id, worker_group=None, fleet=None, verify=True):
     try:
         current_routes = get_routes(base_url, cribl_auth_token, worker_group).json()
