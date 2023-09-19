@@ -138,7 +138,7 @@ def replace_route_table_in_pack(base_url, cribl_auth_token, new_route_table_conf
             return patch(base_url + "/m/" + group + "/p/" + pack_id + "/routes" + "/default",
                          headers=headers, payload=payload, verify=verify)
         else:
-            return patch(base_url + "/p/" + group + "/p/" + pack_id + "/routes" + "/default",
+            return patch(base_url + "/p/" + pack_id + "/routes" + "/default",
                          headers=headers, payload=payload, verify=verify)
     except Exception as e:
         raise Exception("General exception raised while attempting to update routes in pack: %s " % str(e))
