@@ -1,4 +1,4 @@
-# Python API Wrapper Module
+# Cribl Python API Wrapper Module
 
 ## Overview
 The API wrapper module provides a developer with basic create/update/delete utilities for multiple areas of the Stream API. 
@@ -17,13 +17,22 @@ The distribution can be visualized as follows:
 ├── cribl_python_api_wrapper
 │   ├── auth
 │   ├── collectors
+│   ├── diag
 │   ├── event_breaker_rules
 │   ├── executors
+│   ├── fleet_mappings
 │   ├── functions
+│   ├── global_variables
 │   ├── groups
 │   ├── inputs
+│   ├── jobs
 │   ├── lib
+│   ├── licenses
 │   ├── lookups
+│   ├── mappings
+│   ├── messages
+│   ├── notification_targets
+│   ├── notifications
 │   ├── outputs
 │   ├── packs
 │   ├── parsers
