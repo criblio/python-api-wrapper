@@ -14,6 +14,7 @@ from preview.preview_tests import *
 
 from lib.lib_tests import *
 from packs.pack_tests import *
+from utilities.utilities_tests import *
 
 
 def read_config(filename):
