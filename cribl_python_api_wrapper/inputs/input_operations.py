@@ -1,7 +1,7 @@
 from cribl_python_api_wrapper.lib.http_operations import *
 
 
-def get_inputs(base_url, cribl_auth_token, worker_group=None):
+def get_inputs(base_url, cribl_auth_token, worker_group=None, verify=True):
     headers = {"Content-type": "application/json",
                "Accept": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
@@ -10,10 +10,10 @@ def get_inputs(base_url, cribl_auth_token, worker_group=None):
     try:
         if worker_group is not None:
             return get(base_url + "/m/" + worker_group + "/system/inputs",
-                       headers=headers, payload=payload)
+                       headers=headers, payload=payload, verify=verify)
         else:
             return get(base_url + "/system/inputs",
-                       headers=headers, payload=payload)
+                       headers=headers, payload=payload, verify=verify)
 
     except Exception as e:
         raise Exception("General exception raised while attempting to get list of inputs: %s" % str(e))
@@ -37,8 +37,8 @@ def get_input_by_id(base_url, cribl_auth_token, input_id, worker_group=None):
         raise Exception("General exception raised while attempting to get input %s from Cribl: %s" % (
             input_id, str(e)))
 
-
-def create_input(base_url, cribl_auth_token, create_config, worker_group=None):
+# is "Fleet" needed here?
+def create_input(base_url, cribl_auth_token, create_config, worker_group=None, verify=True, fleet=None):
     headers = {"Content-type": "application/json",
                "Accept": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
@@ -51,14 +51,14 @@ def create_input(base_url, cribl_auth_token, create_config, worker_group=None):
     try:
         if worker_group is not None:
             return post(base_url + "/m/" + worker_group + "/system/inputs",
-                        headers=headers, payload=payload)
+                        headers=headers, payload=payload, verify=verify)
         else:
-            return post(base_url + "/system/inputs", headers=headers, payload=payload)
+            return post(base_url + "/system/inputs", headers=headers, payload=payload, verify=verify)
     except Exception as e:
         raise Exception("General exception raised while attempting to create input: %s" % str(e))
 
 
-def update_input(base_url, cribl_auth_token, input_id, update_config, worker_group=None):
+def update_input(base_url, cribl_auth_token, input_id, update_config, worker_group=None, verify=True):
     headers = {"Content-type": "application/json",
                "Accept": "application/json",
                "Authorization": "Bearer " + cribl_auth_token}
@@ -67,10 +67,10 @@ def update_input(base_url, cribl_auth_token, input_id, update_config, worker_gro
     try:
         if worker_group is not None:
             return patch(base_url + "/m/" + worker_group + "/system/inputs/" + input_id,
-                         headers=headers, payload=payload)
+                         headers=headers, payload=payload, verify=verify)
         else:
             return patch(base_url + "/system/inputs/" + input_id,
-                         headers=headers, payload=payload)
+                         headers=headers, payload=payload, verify=verify)
     except Exception as e:
         raise Exception("General exception raised while attempting to update input %s: %s" % (input_id, str(e)))
 
