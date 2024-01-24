@@ -88,10 +88,10 @@ def upload_lookup_file(base_url, cribl_auth_token, lookup_file, worker_group=Non
             raise Exception("Worker group and fleet were both set; operation can be performed on only one worker group"
                             " or fleet at a time.")
         if group is not None:
-            return put(base_url + "/m/" + group + "/system/lookups",
-                       headers=headers, data=open(lookup_file), verify=verify, use_session=use_session)
+            return put(base_url + "/m/" + group + "/system/lookups?filename=" + os.path.basename(lookup_file),
+                       headers=headers, data=open(lookup_file, 'rb'), verify=verify, use_session=use_session)
         else:
-            return put(base_url + "/system/lookups",
-                       headers=headers, data=open(lookup_file), verify=verify, use_session=use_session)
+            return put(base_url + "/system/lookups?filename=" + + os.path.basename(lookup_file),
+                       headers=headers, data=open(lookup_file, 'rb'), verify=verify, use_session=use_session)
     except Exception as e:
         raise Exception("General exception raised while attempting to create lookup: %s " % str(e))
