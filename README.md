@@ -15,14 +15,17 @@ easier creation of these items in a Stream deployment, such as S3 and Splunk sou
 The distribution can be visualized as follows:
 ```
 ├── cribl_python_api_wrapper
+│   ├── appscope_configs
 │   ├── auth
 │   ├── collectors
+│   ├── database_connections
 │   ├── diag
 │   ├── event_breaker_rules
 │   ├── executors
 │   ├── fleet_mappings
 │   ├── functions
 │   ├── global_variables
+│   ├── grokfiles
 │   ├── groups
 │   ├── inputs
 │   ├── jobs
@@ -35,31 +38,49 @@ The distribution can be visualized as follows:
 │   ├── notifications
 │   ├── outputs
 │   ├── packs
+│   ├── parquetschemas
 │   ├── parsers
 │   ├── pipelines
 │   ├── preview
+│   ├── profiler
+│   ├── preview
+│   ├── regexes
 │   ├── routes
+│   ├── schemas
 │   ├── system
 │   ├── users
 │   ├── utilities
 │   └── versioning
+│   ├── workers
 └── tests
+    ├── auth
+    ├── collectors
+    ├── diag
     ├── event_breaker_rules
     ├── functions
     ├── groups
     ├── inputs
+    ├── jobs
     ├── lib
+    ├── licenses
+    ├── lookups
+    ├── messages
     ├── misc
+    ├── notification_targets
+    ├── notifications
     ├── outputs
     ├── packs
     ├── pipelines
     ├── preview
+    ├── profiler
     ├── routes
     ├── system
     ├── users
     ├── utilities
-    └── versioning
+    ├── versioning
+    └── workers
 ```
+* Note: subdirectories under `tests` contain sample usage and are for illustrative purposes only
 
 ### Build
 To build the API wrapper module, execute the following command - srcdir will contain the `pyproject.toml` file, which contains configuration for the build process:
