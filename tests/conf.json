@@ -1,6 +1,6 @@
 {
-    "username": "admin",
-    "password": "admin",
-    "base_url": "http://localhost:19001/api/v1",
-    "worker_group": "default"
+  "username": "admin",
+  "password": "",
+  "base_url": "http://<host>:<port>/api/v1",
+  "worker_group": "default"
 }
