@@ -40,6 +40,8 @@ def test_outputs(base_url, cribl_auth_token, output_id, output_type, worker_grou
     print(f"Creating output " + output_id)
     create_attributes["id"] = output_id
     create_attributes["type"] = output_type
+
+    print("create payload: %s" % json.dumps(create_attributes))
     response = create_output(base_url=base_url, cribl_auth_token=cribl_auth_token, create_config=create_attributes,
                              worker_group=worker_group)
 
@@ -48,7 +50,10 @@ def test_outputs(base_url, cribl_auth_token, output_id, output_type, worker_grou
     time.sleep(sleep_time)
 
     update_attributes["type"] = output_type
+
+    print("update payload: %s" % json.dumps(update_attributes))
     print(f"Updating output " + output_id)
+
     response = update_output(base_url=base_url, cribl_auth_token=cribl_auth_token, output_id=output_id,
                              update_config=update_attributes, worker_group=worker_group)
 
@@ -57,6 +62,7 @@ def test_outputs(base_url, cribl_auth_token, output_id, output_type, worker_grou
     time.sleep(sleep_time)
 
     print(f"Deleting output " + output_id)
+
     response = delete_output(
         base_url=base_url, cribl_auth_token=cribl_auth_token, output_id=output_id, worker_group=worker_group)
     print(f"delete output response: %s" % response.json())

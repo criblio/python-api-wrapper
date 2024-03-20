@@ -1,7 +1,6 @@
-from cribl_python_api_wrapper.system import *
-from cribl_python_api_wrapper.auth import *
-
 import sys
+
+from cribl_python_api_wrapper.auth import *
 
 
 def read_config(filename):
@@ -14,14 +13,8 @@ def read_config(filename):
         return json_data["base_url"], json_data["username"], json_data["password"]
 
 
-def system_testing():
-    print(f'\n\n\nTesting get_system_settings()...')
-    response = get_system_settings(base_url=base_url, cribl_auth_token=cribl_auth_token, verify=False)
-    print(f"Response: %s" % response.json())
-
-    print(f'\n\n\nTesting restart_cribl()...')
-    response = restart_cribl(base_url=base_url, cribl_auth_token=cribl_auth_token, verify=False)
-    print(f"Response: %s" % response.json())
+def auth_testing():
+    pass
 
 
 if __name__ == '__main__':
@@ -52,7 +45,7 @@ if __name__ == '__main__':
             exit()
 
     if cribl_auth_token is not None:
-        system_testing()
+        auth_testing()
     else:
         print(f"Bearer cribl_auth_token not returned from API. Exiting.")
         exit()

@@ -14,6 +14,12 @@ from preview.preview_tests import *
 
 from lib.lib_tests import *
 from packs.pack_tests import *
+from jobs.job_tests import *
+from collectors.collector_tests import *
+from profiler.profiler_tests import *
+from diag.diag_tests import *
+from misc.specific_input_output_testing import *
+from messages.messages_tests import *
 from utilities.utilities_tests import *
 
 
@@ -42,24 +48,26 @@ if __name__ == '__main__':
     base_url, username, password, worker_group, ebr_data_file = read_config(filename=sys.argv[2])
 
     cribl_auth_token = None
-    try:
-        response = api_get_auth_data(base_url=base_url, username=username, password=password)
-        collectors = None
-        if response.json() and "token" in response.json():
-            cribl_auth_token = response.json()["token"]
-    except Exception as e:
-        print(f"Could not retrieve bearer cribl_auth_token. Reason: %s" % str(e))
-        exit()
+
+    if "cribl.cloud" in base_url:
+        cribl_auth_token = password
+    else:
+        try:
+            response = api_get_auth_data(base_url=base_url, username=username, password=password)
+            collectors = None
+            if response.json() and "token" in response.json():
+                cribl_auth_token = response.json()["token"]
+        except Exception as e:
+            print(f"Could not retrieve bearer cribl_auth_token. Reason: %s" % str(e))
+            exit()
 
     if cribl_auth_token is not None:
-        # inputs_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
+
         # outputs_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
         # routes_testing(base_url, cribl_auth_token, worker_group)
         # pipelines_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
         # users_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
         # system_testing(base_url, cribl_auth_token)
-        # build_event_breaker_rules_from_csv(base_url=base_url, cribl_auth_token=cribl_auth_token,
-        #                                    ebr_data_file=ebr_data_file, worker_group=worker_group)
         # versioning_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
         # groups_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
         # functions_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
@@ -67,7 +75,9 @@ if __name__ == '__main__':
         # preview_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
         # packs_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
         # utilities_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
-
+        # jobs_testing(base_url=base_url, cribl_auth_token=cribl_auth_token)
+        # collector_testing(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group)
+        # messages_testing(base_url=base_url, cribl_auth_token=cribl_auth_token)
         pass
 
     else:

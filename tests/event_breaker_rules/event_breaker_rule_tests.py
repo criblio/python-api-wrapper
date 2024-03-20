@@ -1,8 +1,7 @@
-import json
 import sys
-from cribl_python_api_wrapper.lookups import *
+
 from cribl_python_api_wrapper.auth import *
-from time import sleep
+from cribl_python_api_wrapper.event_breaker_rules import *
 
 
 def read_config(filename):
@@ -19,39 +18,11 @@ def read_config(filename):
 #                        verify=True):
 
 
-def lookups_testing():
-    print(f'Testing get_lookups()...')
-    response = get_lookups(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group,
-                           verify=False)
+def event_breaker_rules_testing():
+    print(f'Testing get_event_breaker_rules()...')
+    response = get_event_breaker_rules(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group,
+                                       verify=False)
     print(f"Response: %s" % response.json())
-
-    print("Testing export_lookup_file()...")
-    response = export_lookup_file(base_url=base_url, cribl_auth_token=cribl_auth_token, worker_group=worker_group,
-                                  lookup_filename="host_timezone_mapping.csv", verify=False)
-    print("Response: %s" % response.json())
-    # upload file first, then create lookup
-    print("Testing upload_lookup_file()...")
-    response = upload_lookup_file(base_url=base_url, cribl_auth_token=cribl_auth_token,
-                                  lookup_file="./services_names_port_numbers2.csv", worker_group=worker_group,
-                                  verify=False)
-    filename = None
-    if "filename" in response.json():
-        filename = response.json()["filename"]
-
-    print("Response: %s" % response.json())
-
-    config = {
-        "id": "service_names_port_numbers2",
-        "fileInfo": {
-            "filename": filename
-        }
-    }
-
-    print("Testing create_lookup()...")
-    response = create_lookup(base_url=base_url, cribl_auth_token=cribl_auth_token, create_config=config,
-                             worker_group=worker_group, verify=False)
-
-    print("Response: %s" % response.text)
 
 
 if __name__ == '__main__':
@@ -80,7 +51,7 @@ if __name__ == '__main__':
             exit()
 
     if cribl_auth_token is not None:
-        lookups_testing()
+        event_breaker_rules_testing()
     else:
         print(f"Bearer cribl_auth_token not returned from API. Exiting.")
         exit()
