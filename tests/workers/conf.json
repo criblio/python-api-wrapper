@@ -1,0 +1,6 @@
+{
+  "username": "admin",
+  "password": "",
+  "base_url": "https://<host>:<port>/api/v1",
+  "worker_group": "default"
+}

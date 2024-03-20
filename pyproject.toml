@@ -4,13 +4,14 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cribl_python_api_wrapper"
-version = "1.1.4"
+version = "1.1.5"
 authors = [
-  { name="Rob Franz", email="rfranz@cribl.io" },
+    { name = "Rob Franz", email = "rfranz@cribl.io" },
+    { name = "Duca", email = "duca@cribl.io" }
 ]
 description = "Cribl Python API Wrapper Module"
 readme = "README.md"
-license = { file="LICENSE" }
+license = { file = "LICENSE" }
 requires-python = ">=3.7"
 dependencies = [
     "requests",
